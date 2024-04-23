@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Recetas</title>
+    <link rel="stylesheet" href="/static/css/index.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        form {
+            margin-top: 20px;
+        }
+        form input[type="text"],
+        form textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        form input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        form input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<h1>Lista de Recetas</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Ingredientes</th>
+        <th>Pasos</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for receta in recetas %}
+    <tr>
+        <td>{{ receta['_id'] }}</td>
+        <td>{{ receta['nombre'] }}</td>
+        <td>{{ receta['ingredientes'] | join(', ') }}</td>
+        <td>{{ receta['pasos'] }}</td>
+        <td>
+            <a href="/actualizar/{{ receta['_id'] }}">Actualizar</a> |
+            <a href="/eliminar/{{ receta['_id'] }}">Eliminar</a>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<h2>Agregar Nueva Receta</h2>
+<form action="/agregar" method="post">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" required><br>
+    <label for="ingredientes">Ingredientes (separados por comas):</label>
+    <textarea id="ingredientes" name="ingredientes" required></textarea><br>
+    <label for="pasos">Pasos:</label>
+    <textarea id="pasos" name="pasos" required></textarea><br>
+    <input type="submit" value="Agregar Receta">
+</form>
+</body>
+</html>
